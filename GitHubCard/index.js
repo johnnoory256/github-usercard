@@ -62,6 +62,19 @@ axios.get(`https://api.github.com/users/johnnoory256`)
     cards.appendChild(createCard(myData));
      return myData.followers_url;
   }) 
+  .then(response1 => {
+    
+    return axios.get(response1)
+  })
+  .then(response2 => {
+  
+    response2.data.forEach(text => {
+      axios.get(text.url)
+      .then(response3 => {
+        cards.appendChild(createCard(response3.data));
+      })
+    })
+  })
   
 
 createCard = (obj => {
@@ -115,3 +128,7 @@ const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigkne
         cards.appendChild(createCard(results.data));
       })
   })
+
+
+
+
