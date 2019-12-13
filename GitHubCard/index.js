@@ -24,8 +24,6 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -53,3 +51,60 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+
+const cards = document.querySelector('.cards');
+
+
+axios.get(`https://api.github.com/users/johnnoory256`)
+  .then(response => {
+    
+    const myData = response.data;
+    cards.appendChild(createCard(myData));
+     return myData.followers_url;
+  }) 
+  
+
+createCard = (obj => {
+  const card = document.createElement('div');
+  const img = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const anchor = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  card.appendChild(img);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(anchor);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+
+  img.src=obj.avatar_url;
+  name.textContent=obj.name;
+  username.textContent=obj.username;
+  location.textContent=`Location: ${obj.location}`;
+  profile.textContent='profile:';
+  anchor.href = obj.html_url;
+  anchor.textContent = obj.html_url;
+  followers.textContent = `Followers: ${obj.followers}`;
+  following.textContent = `Following: ${obj.following}`;
+  bio.textContent = `Bio: ${obj.bio}`;
+
+  return card;
+})
+
