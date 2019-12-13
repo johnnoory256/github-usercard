@@ -55,7 +55,6 @@
 
 const cards = document.querySelector('.cards');
 
-
 axios.get(`https://api.github.com/users/johnnoory256`)
   .then(response => {
     
@@ -108,3 +107,11 @@ createCard = (obj => {
   return card;
 })
 
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+  followersArray.forEach(e => {
+    axios.get(`https://api.github.com/users/${e}`)
+      .then(results => {
+        cards.appendChild(createCard(results.data));
+      })
+  })
